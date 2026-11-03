@@ -14,11 +14,8 @@ type PropertyImageProps = {
 };
 
 /**
- * Thin wrapper around next/image. All placeholder art today is SVG (see
- * /public/images/README.md) — next/image serves those unoptimized (SVGs
- * can't be re-encoded to WebP/AVIF anyway) but still gets lazy-loading,
- * layout-stable sizing and the same API real photos will use once they
- * replace the placeholders.
+ * Thin wrapper around next/image with lazy-loading and layout-stable sizing.
+ * SVG sources are served unoptimized; photos go through the image optimizer.
  */
 export default function PropertyImage({
   src,
@@ -34,10 +31,9 @@ export default function PropertyImage({
   const isSvg = src.endsWith(".svg");
   const fitClass = objectFit === "contain" ? "object-contain" : "object-cover";
 
-  // Next's default re-encode quality (75) visibly softens already-modest
-  // source photography. These are small, well-optimized JPEGs to begin
-  // with, so a higher quality budget is worth the small size increase.
-  const quality = 90;
+  // Slightly above Next's default (75), which softens modest source photos;
+  // must stay in the allow-list in next.config.ts.
+  const quality = 80;
 
   if (fill) {
     return (

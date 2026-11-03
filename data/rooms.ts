@@ -1,8 +1,7 @@
 import { hotel } from "./hotel";
 
 export type RoomImage = {
-  /** Path under /public. Currently all point at placeholder art — see
-   * /public/images/README.md for how to swap in real photography. */
+  /** Path under /public. */
   src: string;
   alt: string;
 };

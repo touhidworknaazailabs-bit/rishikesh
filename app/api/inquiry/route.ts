@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { EMAIL_RE, guardJsonPost, stripControlChars } from "@/lib/apiGuard";
+import { notifyHotel } from "@/lib/notify";
 
 /**
  * Booking inquiry endpoint.
@@ -14,42 +16,16 @@ import { NextRequest, NextResponse } from "next/server";
  *  - forward to a PMS / CRM webhook
  */
 
-type InquiryBody = {
-  name?: string;
-  phone?: string;
-  email?: string;
-  checkIn?: string;
-  checkOut?: string;
-  guests?: string;
-  roomType?: string;
-  message?: string;
-};
-
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-function stripControlChars(value: string): string {
-  let out = "";
-  for (let i = 0; i < value.length; i++) {
-    const code = value.charCodeAt(i);
-    const isControl = (code >= 0 && code <= 31) || code === 127;
-    if (!isControl) out += value[i];
-  }
-  return out;
-}
-
 export async function POST(req: NextRequest) {
-  let body: InquiryBody;
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ ok: false, error: "Invalid JSON body" }, { status: 400 });
-  }
+  const guarded = await guardJsonPost(req, "inquiry", { max: 5, windowMs: 10 * 60_000 });
+  if ("response" in guarded) return guarded.response;
+  const body = guarded.body;
 
-  if (!isNonEmptyString(body.name)) {
-    return NextResponse.json({ ok: false, error: "Name is required" }, { status: 400 });
-  }
+  const bad = (error: string) => NextResponse.json({ ok: false, error }, { status: 400 });
 
   // Basic sanitization: cap lengths and strip control characters.
   const clean = (value: unknown, max = 200) =>
@@ -67,7 +43,18 @@ export async function POST(req: NextRequest) {
     receivedAt: new Date().toISOString(),
   };
 
+  if (!inquiry.name) return bad("Name is required");
+  if (inquiry.email && !EMAIL_RE.test(inquiry.email)) return bad("Email address is not valid");
+  if (inquiry.phone && !/^[0-9+()\-\s]{7,30}$/.test(inquiry.phone)) return bad("Phone number is not valid");
+  for (const d of [inquiry.checkIn, inquiry.checkOut]) {
+    if (d && !/^\d{4}-\d{2}-\d{2}$/.test(d)) return bad("Dates must be in yyyy-mm-dd format");
+  }
+  if (inquiry.checkIn && inquiry.checkOut && inquiry.checkOut <= inquiry.checkIn) {
+    return bad("Check-out must be after check-in");
+  }
+
   console.log("[booking-inquiry]", JSON.stringify(inquiry));
+  await notifyHotel(`New booking enquiry from ${inquiry.name}`, inquiry);
 
   return NextResponse.json({
     ok: true,

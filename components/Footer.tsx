@@ -88,9 +88,27 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-ivory/10">
-        <div className="container-editorial flex flex-col md:flex-row items-center justify-between gap-2 py-6 text-xs text-ivory/50">
+        <div className="container-editorial flex flex-col md:flex-row items-center justify-between gap-3 py-6 text-xs text-ivory/50">
           <p>© {year} Hotel Chandreshwar. All rights reserved.</p>
-          <p>Rishikesh, Uttarakhand, India</p>
+          <nav aria-label="Legal" className="flex items-center gap-4">
+            <Link href="/privacy-policy" className="hover:text-terracotta transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-and-conditions" className="hover:text-terracotta transition-colors">
+              Terms &amp; Conditions
+            </Link>
+          </nav>
+          <p>
+            Designed &amp; developed by{" "}
+            <a
+              href="https://naazailabs.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ivory/80 underline underline-offset-2 hover:text-terracotta transition-colors"
+            >
+              Naaz AI Labs
+            </a>
+          </p>
         </div>
       </div>
     </footer>

@@ -42,3 +42,7 @@ next-env.d.ts
 
 # Raw client-supplied photos kept locally only (not web-served)
 .source-photos/
+
+# env files
+.env*
+!.env.example

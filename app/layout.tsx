@@ -49,9 +49,11 @@ export const metadata: Metadata = {
     siteName,
     title: `${hotel.name} — Your Comfortable Stay in Rishikesh`,
     description: hotel.shortDescription,
+    images: [{ url: "/images/hero/hero-1.jpg", alt: "Hotel Chandreshwar, Rishikesh" }],
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/images/hero/hero-1.jpg"],
     title: `${hotel.name} — Your Comfortable Stay in Rishikesh`,
     description: hotel.shortDescription,
   },

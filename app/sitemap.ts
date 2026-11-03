@@ -4,7 +4,8 @@ import { rooms } from "@/data/rooms";
 import { guideArticles } from "@/data/guide";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  // Static pages use the last content update, not "now" on every build.
+  const now = new Date("2026-11-03");
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${siteUrl}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
@@ -16,6 +17,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/book`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${siteUrl}/guide`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/privacy-policy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${siteUrl}/terms-and-conditions`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   const roomRoutes: MetadataRoute.Sitemap = rooms.map((room) => ({

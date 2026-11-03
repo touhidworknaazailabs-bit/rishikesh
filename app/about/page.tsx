@@ -53,7 +53,7 @@ export default function AboutPage() {
             <BookStayButton size="lg" className="mt-8" />
           </Reveal>
           <Reveal delay={0.15} className="order-1 md:order-2 flex flex-col items-center md:items-end">
-            <div className="relative aspect-[4/3] w-full max-w-sm overflow-hidden border border-charcoal/10 shadow-sm">
+            <div className="relative aspect-[16/9] w-full max-w-sm overflow-hidden border border-charcoal/10 shadow-sm">
               <PropertyImage
                 src="/images/property/exterior-1.jpg"
                 alt="Hotel Chandreshwar building exterior and signage, Chandreshwar Nagar, Rishikesh"
