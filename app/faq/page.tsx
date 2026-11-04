@@ -20,7 +20,7 @@ export default function FaqPage() {
       <div className="container-editorial max-w-3xl">
         <Breadcrumbs items={[{ name: "FAQ", url: "/faq" }]} />
         <Reveal className="mt-6 mb-14">
-          <p className="text-xs tracking-[0.25em] text-terracotta mb-4">FAQ</p>
+          <p className="eyebrow">FAQ</p>
           <h1 className="font-display text-5xl md:text-6xl text-charcoal text-balance">
             Frequently Asked Questions
           </h1>

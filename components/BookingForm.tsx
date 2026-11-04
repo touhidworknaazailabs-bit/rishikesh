@@ -2,7 +2,6 @@
 
 import { useState, FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
-import { CalendarCheck, Loader2 } from "lucide-react";
 import { sendInquiry } from "@/lib/booking";
 
 export default function BookingForm() {
@@ -35,7 +34,7 @@ export default function BookingForm() {
 
   if (status === "sent") {
     return (
-      <div className="border border-sage/40 bg-sage/10 p-8 text-center">
+      <div className="rounded-2xl border border-sage/40 bg-sage/10 p-8 text-center">
         <h3 className="font-display text-2xl text-charcoal mb-2">Thank you.</h3>
         <p className="text-charcoal/70">
           Your booking enquiry has been received. The hotel team will contact you
@@ -89,7 +88,13 @@ export default function BookingForm() {
             type="date"
             min={today}
             value={form.checkIn}
-            onChange={(e) => update("checkIn", e.target.value)}
+            // Blur after picking — the native calendar popup otherwise
+            // stays open right against the adjacent Check-out field, and
+            // the next click just lands on that popup instead of the field.
+            onChange={(e) => {
+              update("checkIn", e.target.value);
+              e.target.blur();
+            }}
             className="input"
           />
         </Field>
@@ -98,7 +103,10 @@ export default function BookingForm() {
             type="date"
             min={form.checkIn || today}
             value={form.checkOut}
-            onChange={(e) => update("checkOut", e.target.value)}
+            onChange={(e) => {
+              update("checkOut", e.target.value);
+              e.target.blur();
+            }}
             className="input"
           />
         </Field>
@@ -135,12 +143,12 @@ export default function BookingForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="mt-2 inline-flex items-center justify-center gap-2 bg-terracotta text-ivory px-8 py-4 text-sm font-medium tracking-wide hover:bg-brown transition-colors disabled:opacity-60"
+        className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-charcoal text-ivory px-8 py-4 text-sm font-medium tracking-wide hover:bg-brown transition-colors disabled:opacity-60"
       >
         {status === "submitting" ? (
-          <Loader2 className="size-4 animate-spin" aria-hidden />
+          <img src="/icons/loader-2-ivory.svg" className="size-4 animate-spin" alt="" aria-hidden />
         ) : (
-          <CalendarCheck className="size-4" aria-hidden />
+          <img src="/icons/calendar-check-ivory.svg" className="size-4" alt="" aria-hidden />
         )}
         Request Booking
       </button>
@@ -159,9 +167,12 @@ export default function BookingForm() {
           font-size: 0.9rem;
           color: var(--color-charcoal);
           outline: none;
+          border-radius: 0.5rem;
+          transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
         .input:focus {
           border-color: var(--color-terracotta);
+          box-shadow: 0 0 0 3px rgba(168, 90, 48, 0.15);
         }
       `}</style>
     </form>

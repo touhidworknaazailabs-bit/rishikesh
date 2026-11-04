@@ -17,19 +17,19 @@ export type NavLink = { label: string; href: string };
 export const mainNav: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Rooms", href: "/rooms" },
-  { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
   { label: "Rishikesh Guide", href: "/guide" },
   { label: "Location", href: "/location" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const footerNav: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Rooms", href: "/rooms" },
-  { label: "About", href: "/about" },
-  { label: "Amenities", href: "/#why-stay" },
+  { label: "Amenities", href: "/about" },
   { label: "Gallery", href: "/gallery" },
   { label: "Location", href: "/location" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];

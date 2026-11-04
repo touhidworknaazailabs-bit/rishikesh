@@ -49,6 +49,18 @@ export const hotel = {
     ],
   },
 
+  // Straight-line/road distances from the hotel, as given directly by the
+  // owner. Kept as simple, verified name+distance pairs rather than
+  // invented walking times or routes.
+  distances: [
+    { name: "Triveni Ghat", distance: "800 m" },
+    { name: "Jankipur", distance: "800 m" },
+    { name: "Bajrang Setu", distance: "3 km" },
+    { name: "AIIMS Hospital", distance: "4 km" },
+    { name: "Bus Stand", distance: "800 m" },
+    { name: "Yog Nagari Railway Station", distance: "2 km" },
+  ],
+
   // Google Maps share link supplied by the client. Do not replace with an
   // invented / geocoded link — this is the verified source of truth.
   googleMapsUrl: "https://maps.app.goo.gl/XyuTpGKEpUZuWLUj9",

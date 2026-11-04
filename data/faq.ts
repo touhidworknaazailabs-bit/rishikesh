@@ -1,14 +1,10 @@
 import { hotel } from "./hotel";
-import { rooms } from "./rooms";
 import { formatPrice } from "@/lib/format";
 
 export type FaqItem = {
   question: string;
   answer: string;
 };
-
-const acRoom = rooms.find((r) => r.type === "AC")!;
-const nonAcRoom = rooms.find((r) => r.type === "Non-AC")!;
 
 // Only confirmed information. Do not add speculative Q&A here.
 // Counts, prices and occupancy are pulled from data/hotel.ts and
@@ -32,7 +28,7 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "What is the room tariff?",
-    answer: `AC Double Bed Rooms are ${formatPrice(acRoom.price)}, and Non-AC Double Bed Rooms are ${formatPrice(nonAcRoom.price)}, both for double occupancy. Confirm current availability directly with the hotel.`,
+    answer: `AC Double Bed Rooms are ${formatPrice(hotel.pricing.acRoomPrice)}, and Non-AC Double Bed Rooms are ${formatPrice(hotel.pricing.nonAcRoomPrice)}. Contact the hotel directly by phone or WhatsApp to confirm current availability.`,
   },
   {
     question: "Do the rooms have attached bathrooms?",

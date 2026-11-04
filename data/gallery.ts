@@ -1,4 +1,4 @@
-export type GalleryCategory = "Rooms" | "Interiors" | "Property";
+export type GalleryCategory = "Rooms" | "Interiors";
 
 export type GalleryImage = {
   src: string;
@@ -25,7 +25,10 @@ export const galleryImages: GalleryImage[] = [
   { src: "/images/gallery/gallery-room-8.jpg", alt: "Double bed room with gold curtains, Hotel Chandreshwar", category: "Rooms" },
   { src: "/images/gallery/gallery-interior-1.jpg", alt: "Hotel Chandreshwar corridor", category: "Interiors", featured: true },
   { src: "/images/gallery/gallery-interior-2.jpg", alt: "Hotel Chandreshwar hallway leading to guest rooms", category: "Interiors" },
-  { src: "/images/property/exterior-1.jpg", alt: "Hotel Chandreshwar building exterior and signage", category: "Property", featured: true },
+  // No "Property" (exterior) photo — the only one supplied was a
+  // low-quality crop from the hotel's printed business card and was
+  // removed sitewide rather than shown at poor quality. See
+  // public/images/README.md.
 ];
 
-export const galleryCategories: GalleryCategory[] = ["Rooms", "Interiors", "Property"];
+export const galleryCategories: GalleryCategory[] = ["Rooms", "Interiors"];

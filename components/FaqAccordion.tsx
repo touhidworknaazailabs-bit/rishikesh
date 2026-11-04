@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
 import clsx from "clsx";
 import { FaqItem } from "@/data/faq";
 
@@ -18,14 +17,13 @@ export default function FaqAccordion({ faqs }: { faqs: FaqItem[] }) {
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : i)}
               aria-expanded={isOpen}
-              className="flex w-full items-center justify-between gap-4 py-5 text-left"
+              className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:bg-charcoal/[0.02] -mx-2 px-2"
             >
               <span className="font-display text-lg md:text-xl text-charcoal">{faq.question}</span>
-              <Plus
-                className={clsx(
-                  "size-5 shrink-0 text-terracotta transition-transform duration-300",
-                  isOpen && "rotate-45"
-                )}
+              <img
+                src="/icons/plus-terracotta.svg"
+                className={clsx("size-5 shrink-0 transition-transform duration-300", isOpen && "rotate-45")}
+                alt=""
                 aria-hidden
               />
             </button>

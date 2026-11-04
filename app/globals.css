@@ -1,11 +1,19 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Design tokens — "warm minimal luxury"
+   Deliberately restrained: one quiet accent (clay), used sparingly for a
+   single signature action per screen rather than painting every button and
+   badge the same bright color. Sand is a second, barely-there neutral for
+   section alternation instead of an ad-hoc hex scattered across pages.
+   --------------------------------------------------------------------------- */
 :root {
   --color-ivory: #f7f3ec;
-  --color-charcoal: #191817;
-  --color-brown: #6b5142;
-  --color-terracotta: #c96a32;
-  --color-sage: #71806c;
+  --color-sand: #eae3d3;
+  --color-charcoal: #19181a;
+  --color-brown: #5c4636;
+  --color-terracotta: #a85a30;
+  --color-sage: #6d7a63;
 
   --background: var(--color-ivory);
   --foreground: var(--color-charcoal);
@@ -13,6 +21,7 @@
 
 @theme inline {
   --color-ivory: var(--color-ivory);
+  --color-sand: var(--color-sand);
   --color-charcoal: var(--color-charcoal);
   --color-brown: var(--color-brown);
   --color-terracotta: var(--color-terracotta);
@@ -21,11 +30,11 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-body), Arial, Helvetica, sans-serif;
 
-  --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  --animate-fade-in: fade-in 0.8s ease forwards;
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fade-in 1s ease forwards;
   --animate-marquee: marquee 38s linear infinite;
 
   @keyframes fade-up {
@@ -66,12 +75,34 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Very fine paper grain over the whole page. Large flat fills of a single
+   cream hex read as "flat CSS colour"; a touch of tooth makes them read as a
+   printed/textured surface instead. Kept extremely low-opacity so it never
+   muddies photography or text — it should be felt, not seen. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 h1,
 h2,
 h3,
 h4,
 .font-display {
   font-family: var(--font-display);
+  /* Large serif headlines (text-5xl+) can make a single long word — e.g.
+     "Chandreshwar" — wider than the available column on narrow phones,
+     forcing the whole page to scroll horizontally, since browsers don't
+     break inside a word by default. Confirmed on /location's H1 at
+     320px. This is a heading-wide risk (any headline could contain a long
+     place/brand name), so the fix is on the heading style itself rather
+     than patched per page. */
+  overflow-wrap: break-word;
 }
 
 ::selection {
@@ -111,3 +142,100 @@ html {
 .text-balance {
   text-wrap: balance;
 }
+
+/* Hide scrollbar on the horizontal room showcase — it's swipe/drag/arrow
+   driven, not meant to look like a normal scrollable list. */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Consistent, visible keyboard-focus ring across every interactive element
+   that doesn't define its own (buttons, links, custom form controls).
+   Mouse/touch users never see it — :focus-visible only fires for keyboard
+   and other non-pointer focus. */
+:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+/* Small tracked-out caps label ("ROOMS", "FAQ", "THE STAY", ...) used above
+   nearly every section heading site-wide — a single utility instead of
+   retyping the same four classes in every file. */
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--color-terracotta);
+  margin-bottom: 1rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Form controls
+   The browser's default date/select chrome (the OS dropdown arrow, the
+   calendar glyph) is the biggest "unstyled form" tell on the booking bar.
+   `.field-control` replaces both with brand-matched versions:
+     - selects get appearance:none + our own chevron
+     - date inputs keep the browser's own (recolored) calendar-picker-indicator
+       at its normal size/position, so clicking the rest of the field still
+       places a normal text cursor and typing a date works
+   --------------------------------------------------------------------------- */
+.field-control {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: none;
+}
+
+select.field-control {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23a85a30' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.2rem;
+  cursor: pointer;
+}
+
+/* Previously this made ::-webkit-calendar-picker-indicator cover the
+   entire field (inset:0, opacity:0) so a click anywhere opened the native
+   picker. That broke normal typing — a click meant to place a text cursor
+   always hit the invisible indicator instead, so a date typed via the
+   keyboard silently never registered — and left the picker popup open to
+   swallow the very next click on an adjacent field (e.g. Check-out right
+   next to Check-in). Left at its default browser size, the indicator stays
+   a normal, deliberately-clicked calendar icon instead of a field-wide trap. */
+input[type="date"].field-control {
+  cursor: text;
+}
+input[type="date"].field-control::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+/* Mute the mm/dd/yyyy placeholder until a real date is chosen, so an empty
+   field reads as a prompt rather than as literal text. */
+input[type="date"].field-control::-webkit-datetime-edit {
+  color: color-mix(in srgb, var(--color-charcoal) 50%, transparent);
+  letter-spacing: 0.02em;
+}
+input[type="date"].field-control:focus::-webkit-datetime-edit,
+input[type="date"].field-control:valid::-webkit-datetime-edit {
+  color: var(--color-charcoal);
+}
+
+/* Dark variant — the hero's booking strip sits directly on the photo, so
+   its fields need ivory text and a light chevron instead of the charcoal
+   ones every other (light-background) booking field uses. */
+select.field-control.field-control--dark {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23f7f3ec' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+input[type="date"].field-control--dark::-webkit-datetime-edit {
+  color: color-mix(in srgb, var(--color-ivory) 55%, transparent);
+}
+input[type="date"].field-control--dark:focus::-webkit-datetime-edit,
+input[type="date"].field-control--dark:valid::-webkit-datetime-edit {
+  color: var(--color-ivory);
+}
+input[type="date"].field-control--dark::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+

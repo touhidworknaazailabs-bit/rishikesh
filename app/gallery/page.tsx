@@ -19,7 +19,7 @@ export default function GalleryPage() {
         <Breadcrumbs items={[{ name: "Gallery", url: "/gallery" }]} />
         <Reveal className="max-w-2xl mt-6 mb-12 md:mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <p className="text-xs tracking-[0.25em] text-terracotta mb-4">GALLERY</p>
+            <p className="eyebrow">GALLERY</p>
             <h1 className="font-display text-5xl md:text-6xl text-charcoal text-balance">Gallery</h1>
             <p className="mt-5 text-charcoal/70 leading-relaxed max-w-xl">
               An honest look at the rooms, interiors and property at Hotel

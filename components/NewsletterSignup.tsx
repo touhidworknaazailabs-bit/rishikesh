@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { Mail, Loader2, Check } from "lucide-react";
 
 /**
  * Simple email capture strip. Submits to /api/newsletter (currently just
@@ -32,16 +31,16 @@ export default function NewsletterSignup() {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center gap-4">
       <span className="flex items-center gap-2 text-ivory/70 text-sm shrink-0">
-        <Mail className="size-4" aria-hidden />
+        <img src="/icons/mail-ivory.svg" className="size-4" alt="" aria-hidden />
         Stay updated on Hotel Chandreshwar
       </span>
       {status === "done" ? (
         <p className="flex items-center gap-2 text-sm text-sage">
-          <Check className="size-4" aria-hidden />
+          <img src="/icons/check-sage.svg" className="size-4" alt="" aria-hidden />
           Thanks — we&rsquo;ve noted your email.
         </p>
       ) : (
-        <form onSubmit={handleSubmit} className="flex w-full sm:w-auto max-w-sm">
+        <form onSubmit={handleSubmit} className="flex w-full sm:w-auto max-w-sm rounded-lg overflow-hidden">
           <input
             type="email"
             required
@@ -55,7 +54,11 @@ export default function NewsletterSignup() {
             disabled={status === "loading"}
             className="shrink-0 bg-terracotta text-ivory px-5 py-2.5 text-sm font-medium hover:bg-brown transition-colors disabled:opacity-60 flex items-center gap-2"
           >
-            {status === "loading" ? <Loader2 className="size-4 animate-spin" aria-hidden /> : "Subscribe"}
+            {status === "loading" ? (
+              <img src="/icons/loader-2-ivory.svg" className="size-4 animate-spin" alt="" aria-hidden />
+            ) : (
+              "Subscribe"
+            )}
           </button>
         </form>
       )}

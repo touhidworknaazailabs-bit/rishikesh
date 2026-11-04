@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Reveal from "@/components/Reveal";
-import PropertyImage from "@/components/PropertyImage";
 import { BookStayButton } from "@/components/CtaButtons";
 import { hotel } from "@/data/hotel";
 
@@ -20,52 +19,42 @@ export default function AboutPage() {
         <Breadcrumbs items={[{ name: "About", url: "/about" }]} />
 
         <Reveal className="max-w-3xl mt-6 mb-16">
-          <p className="text-xs tracking-[0.25em] text-terracotta mb-4">OUR STORY</p>
+          <p className="eyebrow">OUR STORY</p>
           <h1 className="font-display text-5xl md:text-6xl text-charcoal text-balance">
             Your Comfortable Stay in Rishikesh
           </h1>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center mb-20 md:mb-28">
-          <Reveal className="order-2 md:order-1">
-            <p className="text-charcoal/75 leading-relaxed text-lg font-display italic">
-              Rishikesh is a place where people come for many different reasons —
-              to experience the Ganga, explore the city, spend time with family,
-              visit spiritual destinations, or simply take a break from everyday
-              life.
-            </p>
-            <p className="mt-6 text-charcoal/70 leading-relaxed">
-              Hotel Chandreshwar is designed as a simple and welcoming base for
-              those journeys. Located in Chandreshwar Nagar, near Durga Mandir and
-              Dayanand Ashram Road, the hotel offers AC and Non-AC double-bed
-              rooms with attached bathrooms and hot water.
-            </p>
-            <p className="mt-4 text-charcoal/70 leading-relaxed">
-              The experience is kept straightforward and personal: a comfortable
-              room, a convenient location, and an easy way to connect with the
-              hotel directly — by phone, WhatsApp, or a simple booking enquiry, no
-              middlemen involved.
-            </p>
-            <p className="mt-4 text-charcoal/70 leading-relaxed">
-              The hotel is run by {hotel.owner}, and every booking enquiry is
-              handled personally by the hotel team.
-            </p>
-            <BookStayButton size="lg" className="mt-8" />
-          </Reveal>
-          <Reveal delay={0.15} className="order-1 md:order-2 flex flex-col items-center md:items-end">
-            <div className="relative aspect-[4/3] w-full max-w-sm overflow-hidden border border-charcoal/10 shadow-sm">
-              <PropertyImage
-                src="/images/property/exterior-1.jpg"
-                alt="Hotel Chandreshwar building exterior and signage, Chandreshwar Nagar, Rishikesh"
-                fill
-                sizes="(min-width: 768px) 384px, 100vw"
-              />
-            </div>
-            <p className="mt-3 max-w-sm text-xs text-charcoal/45 text-center md:text-right">
-              The hotel&rsquo;s street-facing entrance and signage
-            </p>
-          </Reveal>
-        </div>
+        {/* No exterior photo here — the only one supplied was a low-quality
+            crop from the hotel's printed business card (see
+            public/images/README.md) and was removed sitewide rather than
+            shown at poor quality. Single-column text until the owner
+            supplies a proper exterior shot. */}
+        <Reveal className="max-w-2xl mb-20 md:mb-28">
+          <p className="text-charcoal/75 leading-relaxed text-lg font-display italic">
+            Rishikesh is a place where people come for many different reasons —
+            to experience the Ganga, explore the city, spend time with family,
+            visit spiritual destinations, or simply take a break from everyday
+            life.
+          </p>
+          <p className="mt-6 text-charcoal/70 leading-relaxed">
+            Hotel Chandreshwar is designed as a simple and welcoming base for
+            those journeys. Located in Chandreshwar Nagar, near Durga Mandir and
+            Dayanand Ashram Road, the hotel offers AC and Non-AC double-bed
+            rooms with attached bathrooms and hot water.
+          </p>
+          <p className="mt-4 text-charcoal/70 leading-relaxed">
+            The experience is kept straightforward and personal: a comfortable
+            room, a convenient location, and an easy way to connect with the
+            hotel directly — by phone, WhatsApp, or a simple booking enquiry, no
+            middlemen involved.
+          </p>
+          <p className="mt-4 text-charcoal/70 leading-relaxed">
+            The hotel is run by {hotel.owner}, and every booking enquiry is
+            handled personally by the hotel team.
+          </p>
+          <BookStayButton size="lg" className="mt-8" />
+        </Reveal>
 
         <Reveal className="border-t border-charcoal/10 pt-14 max-w-2xl">
           <h2 className="font-display text-3xl text-charcoal mb-4">What We Offer</h2>

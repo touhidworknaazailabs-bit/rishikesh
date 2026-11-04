@@ -18,7 +18,7 @@ export default function RoomsPage() {
       <div className="container-editorial">
         <Breadcrumbs items={[{ name: "Rooms", url: "/rooms" }]} />
         <Reveal className="max-w-2xl mt-6 mb-16 md:mb-24">
-          <p className="text-xs tracking-[0.25em] text-terracotta mb-4">ACCOMMODATION</p>
+          <p className="eyebrow">ACCOMMODATION</p>
           <h1 className="font-display text-5xl md:text-6xl text-charcoal text-balance">Rooms</h1>
           <p className="mt-6 text-charcoal/70 leading-relaxed">
             {hotel.rooms.total} double-bed rooms in total — {hotel.rooms.ac} AC and{" "}
@@ -37,13 +37,19 @@ export default function RoomsPage() {
         ))}
       </div>
 
-      <section className="bg-charcoal text-ivory py-20 text-center">
-        <div className="container-editorial">
+      {/* border-b so this band stays visually distinct from the Footer
+          immediately below it — both are bg-charcoal, and without a seam
+          between them they read as one merged block with no boundary,
+          making the padding on each look like one huge unexplained gap. */}
+      <section className="relative bg-charcoal text-ivory py-20 text-center overflow-hidden border-b border-ivory/10">
+        <div className="relative z-10 container-editorial">
           <h2 className="font-display text-3xl md:text-4xl text-balance">Not sure which room suits you?</h2>
           <p className="mt-4 text-ivory/70">Send your dates and guest count — the hotel team will recommend the right room.</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <BookStayButton size="lg" />
-            <WhatsAppButton variant="secondary" size="lg" />
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+            {/* Inverted fill — the default solid (charcoal-on-ivory) would
+                disappear against this section's own charcoal background. */}
+            <BookStayButton size="lg" className="!bg-ivory !text-charcoal hover:!bg-sand" />
+            <WhatsAppButton size="lg" />
           </div>
         </div>
       </section>

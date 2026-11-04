@@ -20,7 +20,7 @@ export default function BookPage() {
         <Breadcrumbs items={[{ name: "Book Your Stay", url: "/book" }]} />
 
         <Reveal className="mt-6 mb-4">
-          <p className="text-xs tracking-[0.25em] text-terracotta mb-4">DIRECT BOOKING</p>
+          <p className="eyebrow">DIRECT BOOKING</p>
           <h1 className="font-display text-5xl md:text-6xl text-charcoal text-balance">Book Your Stay</h1>
           <p className="mt-6 text-charcoal/70 leading-relaxed">
             There&rsquo;s no online payment or instant confirmation yet — every stay at

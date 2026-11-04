@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check } from "lucide-react";
 import { hotel } from "@/data/hotel";
 
 export default function CopyAddressButton() {
@@ -21,9 +20,13 @@ export default function CopyAddressButton() {
     <button
       type="button"
       onClick={handleCopy}
-      className="inline-flex items-center gap-2 border border-charcoal/20 px-5 py-3 text-sm text-charcoal hover:border-charcoal transition-colors"
+      className="inline-flex items-center gap-2 rounded-lg border border-charcoal/20 px-5 py-3 text-sm text-charcoal hover:border-charcoal transition-colors"
     >
-      {copied ? <Check className="size-4 text-sage" aria-hidden /> : <Copy className="size-4" aria-hidden />}
+      {copied ? (
+        <img src="/icons/check-sage.svg" className="size-4" alt="" aria-hidden />
+      ) : (
+        <img src="/icons/copy-charcoal.svg" className="size-4" alt="" aria-hidden />
+      )}
       {copied ? "Address Copied" : "Copy Address"}
     </button>
   );

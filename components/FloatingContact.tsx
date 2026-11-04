@@ -1,20 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { MessageCircle, Phone, X } from "lucide-react";
 import { buildTelLink, buildWhatsAppLink } from "@/lib/booking";
 
 /**
- * Floating call/WhatsApp button, bottom-right. Desktop/tablet only
- * (md and up) — on mobile the fixed bottom action bar already covers
- * Call/WhatsApp/Book, so this would just duplicate it.
+ * Floating Call / WhatsApp / Book button, bottom-right, on every screen
+ * size. Previously mobile had its own separate fixed bottom bar (edge to
+ * edge, reserving page padding for itself) while desktop got this floating
+ * bubble — that meant two different patterns to maintain, and the bottom
+ * bar's real height (safe-area inset included) kept drifting out of sync
+ * with the padding reserved for it, so it periodically covered page
+ * content. Using one floating overlay everywhere removes that whole class
+ * of bug: it sits ON TOP of content by design (like it always did on
+ * desktop), so there's no reserved space to keep in sync.
  */
 export default function FloatingContact() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="hidden md:flex fixed bottom-6 right-6 z-50 flex-col items-end gap-3">
+    <div
+      className="fixed right-4 md:right-6 z-50 flex flex-col items-end gap-3"
+      style={{ bottom: "calc(1rem + env(safe-area-inset-bottom))" }}
+    >
       <AnimatePresence>
         {open && (
           <motion.div
@@ -24,49 +33,61 @@ export default function FloatingContact() {
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-end gap-2.5"
           >
+            <Link
+              href="/book"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 rounded-full bg-ivory text-charcoal pl-4 pr-3 py-2.5 shadow-lg border border-charcoal/10 text-sm hover:bg-charcoal hover:text-ivory transition-colors"
+            >
+              Book Your Stay
+              <span className="flex size-8 items-center justify-center rounded-full bg-terracotta text-ivory shrink-0">
+                <img src="/icons/calendar-check-ivory.svg" className="size-4" alt="" aria-hidden />
+              </span>
+            </Link>
             <a
               href={buildWhatsAppLink({})}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 bg-ivory text-charcoal pl-4 pr-3 py-2.5 shadow-lg border border-charcoal/10 text-sm hover:bg-charcoal hover:text-ivory transition-colors"
+              className="flex items-center gap-2.5 rounded-full bg-ivory text-charcoal pl-4 pr-3 py-2.5 shadow-lg border border-charcoal/10 text-sm hover:bg-charcoal hover:text-ivory transition-colors"
             >
               WhatsApp Us
               <span className="flex size-8 items-center justify-center rounded-full bg-sage text-ivory shrink-0">
-                <MessageCircle className="size-4" aria-hidden />
+                <img src="/icons/message-circle-ivory.svg" className="size-4" alt="" aria-hidden />
               </span>
             </a>
             <a
               href={buildTelLink()}
-              className="flex items-center gap-2.5 bg-ivory text-charcoal pl-4 pr-3 py-2.5 shadow-lg border border-charcoal/10 text-sm hover:bg-charcoal hover:text-ivory transition-colors"
+              className="flex items-center gap-2.5 rounded-full bg-ivory text-charcoal pl-4 pr-3 py-2.5 shadow-lg border border-charcoal/10 text-sm hover:bg-charcoal hover:text-ivory transition-colors"
             >
               Call Now
-              <span className="flex size-8 items-center justify-center rounded-full bg-terracotta text-ivory shrink-0">
-                <Phone className="size-4" aria-hidden />
+              <span className="flex size-8 items-center justify-center rounded-full bg-charcoal text-ivory shrink-0">
+                <img src="/icons/phone-ivory.svg" className="size-4" alt="" aria-hidden />
               </span>
             </a>
           </motion.div>
         )}
       </AnimatePresence>
 
+      {/* A restrained surface doesn't have anything pulsing for attention —
+          this sits quietly in the corner and only responds to the visitor's
+          own hover/tap, rather than looping an animation at them. */}
       <motion.button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? "Close contact options" : "Contact Hotel Chandreshwar"}
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.94 }}
-        animate={open ? {} : { boxShadow: ["0 0 0 0 rgba(201,106,50,0.35)", "0 0 0 12px rgba(201,106,50,0)"] }}
-        transition={open ? { duration: 0.2 } : { duration: 2, repeat: Infinity, ease: "easeOut" }}
-        className="flex size-14 items-center justify-center rounded-full bg-terracotta text-ivory shadow-xl"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ duration: 0.2 }}
+        className="flex size-14 items-center justify-center rounded-full bg-charcoal text-ivory shadow-xl"
       >
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
             <motion.span key="close" initial={{ rotate: -45, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 45, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <X className="size-6" aria-hidden />
+              <img src="/icons/x-ivory.svg" className="size-6" alt="" aria-hidden />
             </motion.span>
           ) : (
             <motion.span key="open" initial={{ rotate: 45, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -45, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <MessageCircle className="size-6" aria-hidden />
+              <img src="/icons/message-circle-ivory.svg" className="size-6" alt="" aria-hidden />
             </motion.span>
           )}
         </AnimatePresence>

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Reveal from "@/components/Reveal";
+import PropertyImage from "@/components/PropertyImage";
+import PhotoCredit from "@/components/PhotoCredit";
 import { BookStayButton, WhatsAppButton } from "@/components/CtaButtons";
 import { guideArticles, getGuideArticleBySlug } from "@/data/guide";
 import { rooms } from "@/data/rooms";
@@ -43,26 +45,78 @@ export default async function GuideArticlePage({
         <Breadcrumbs items={[{ name: "Rishikesh Guide", url: "/guide" }, { name: article.title, url: `/guide/${article.slug}` }]} />
 
         <Reveal className="mt-6 mb-4">
-          <p className="text-xs tracking-[0.25em] text-terracotta mb-4">RISHIKESH GUIDE</p>
+          <p className="eyebrow">RISHIKESH GUIDE</p>
           <h1 className="font-display text-4xl md:text-5xl text-charcoal text-balance">{article.title}</h1>
           <p className="mt-5 text-charcoal/70 leading-relaxed text-lg font-display italic">{article.intro}</p>
         </Reveal>
 
-        <Reveal delay={0.1} className="mt-12 space-y-10">
-          {article.sections.map((section) => (
+        {article.heroImage && (
+          <Reveal delay={0.05} className="mt-8">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-charcoal/5">
+              <PropertyImage
+                src={article.heroImage}
+                alt={article.heroImageAlt ?? article.title}
+                fill
+                sizes="(min-width: 1024px) 768px, 100vw"
+                priority
+              />
+              {article.heroCredit && <PhotoCredit credit={article.heroCredit} />}
+            </div>
+          </Reveal>
+        )}
+
+        <Reveal delay={0.1} className="mt-12 space-y-14">
+          {article.sections.map((section, i) => (
             <section key={section.heading}>
-              <h2 className="font-display text-2xl text-charcoal mb-3">{section.heading}</h2>
-              {section.paragraphs.map((p) => (
-                <p key={p} className="text-charcoal/70 leading-relaxed mb-3">
-                  {p}
-                </p>
-              ))}
-              {section.list && (
-                <ul className="mt-2 space-y-1.5 text-charcoal/70">
-                  {section.list.map((item) => (
-                    <li key={item}>• {item}</li>
+              {section.image ? (
+                // Alternating image side for visual rhythm across a long
+                // list of sections, rather than every image on the same side.
+                <div
+                  className={`grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] sm:gap-10 items-center ${
+                    i % 2 === 1 ? "sm:[&>*:first-child]:order-2" : ""
+                  }`}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-charcoal/5">
+                    <PropertyImage
+                      src={section.image}
+                      alt={section.imageAlt ?? section.heading}
+                      fill
+                      sizes="(min-width: 640px) 40vw, 100vw"
+                    />
+                    {section.credit && <PhotoCredit credit={section.credit} />}
+                  </div>
+                  <div>
+                    <h2 className="font-display text-2xl text-charcoal mb-3">{section.heading}</h2>
+                    {section.paragraphs.map((p) => (
+                      <p key={p} className="text-charcoal/70 leading-relaxed mb-3">
+                        {p}
+                      </p>
+                    ))}
+                    {section.list && (
+                      <ul className="mt-2 space-y-1.5 text-charcoal/70">
+                        {section.list.map((item) => (
+                          <li key={item}>• {item}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <h2 className="font-display text-2xl text-charcoal mb-3">{section.heading}</h2>
+                  {section.paragraphs.map((p) => (
+                    <p key={p} className="text-charcoal/70 leading-relaxed mb-3">
+                      {p}
+                    </p>
                   ))}
-                </ul>
+                  {section.list && (
+                    <ul className="mt-2 space-y-1.5 text-charcoal/70">
+                      {section.list.map((item) => (
+                        <li key={item}>• {item}</li>
+                      ))}
+                    </ul>
+                  )}
+                </>
               )}
             </section>
           ))}
@@ -77,9 +131,9 @@ export default async function GuideArticlePage({
             bathrooms and hot water.
           </p>
           <div className="flex flex-wrap gap-3 text-sm">
-            <Link href="/rooms" className="border border-charcoal/20 px-4 py-2.5 text-charcoal hover:border-charcoal transition-colors">Explore Rooms</Link>
-            <Link href="/location" className="border border-charcoal/20 px-4 py-2.5 text-charcoal hover:border-charcoal transition-colors">Location</Link>
-            <Link href="/contact" className="border border-charcoal/20 px-4 py-2.5 text-charcoal hover:border-charcoal transition-colors">Contact</Link>
+            <Link href="/rooms" className="rounded-lg border border-charcoal/20 px-4 py-2.5 text-charcoal hover:border-charcoal transition-colors">Explore Rooms</Link>
+            <Link href="/location" className="rounded-lg border border-charcoal/20 px-4 py-2.5 text-charcoal hover:border-charcoal transition-colors">Location</Link>
+            <Link href="/contact" className="rounded-lg border border-charcoal/20 px-4 py-2.5 text-charcoal hover:border-charcoal transition-colors">Contact</Link>
           </div>
           <div className="mt-8 flex flex-wrap gap-4">
             <BookStayButton size="lg" />

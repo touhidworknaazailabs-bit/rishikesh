@@ -4,9 +4,9 @@ import { siteUrl } from "@/data/site";
 /**
  * Renders one or more JSON-LD <script> blocks. Only factual, confirmed
  * information is included — no invented reviews, ratings, stars, awards,
- * or opening year. priceRange is included only once both room prices are
+ * or opening year. priceRange is included only when both room prices are
  * confirmed (data/hotel.ts pricing fields are non-null); it's omitted
- * automatically if either is unset again in the future.
+ * automatically if either is unset in the future.
  */
 export function HotelStructuredData() {
   const data: Record<string, unknown> = {
