@@ -101,9 +101,14 @@ export default function Footer() {
       <div className="border-t border-ivory/10">
         <div className="container-editorial flex flex-col md:flex-row items-center justify-between gap-3 py-6 text-xs text-ivory/50">
           <p>© {year} Hotel Chandreshwar. All rights reserved.</p>
-          <Link href="/privacy-policy" className="hover:text-ivory/80 transition-colors">
-            Privacy Policy
-          </Link>
+          <nav aria-label="Legal" className="flex items-center gap-4">
+            <Link href="/privacy-policy" className="hover:text-terracotta transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-and-conditions" className="hover:text-terracotta transition-colors">
+              Terms &amp; Conditions
+            </Link>
+          </nav>
           <p>Rishikesh, Uttarakhand, India</p>
         </div>
         <div className="container-editorial pb-6 text-center">
