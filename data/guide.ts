@@ -11,6 +11,8 @@ export type ImageCredit = {
   sourceUrl: string;
 };
 
+export type SourceLink = { label: string; url: string };
+
 export type GuideSection = {
   heading: string;
   paragraphs: string[];
@@ -18,6 +20,10 @@ export type GuideSection = {
   image?: string;
   imageAlt?: string;
   credit?: ImageCredit;
+  // Outbound links to authoritative, independent sources for a factual
+  // claim made in this section — e.g. Wikipedia for a landmark's history.
+  // Not required on every section; only added where a real source exists.
+  sources?: SourceLink[];
 };
 
 export type GuideArticle = {
@@ -102,6 +108,9 @@ export const guideArticles: GuideArticle[] = [
         // Pexels, photographer Tanuj Matta — free license, no attribution required.
         image: "/images/attractions/beatles-ashram.jpg",
         imageAlt: "The 'Let It Be' mural at the Beatles Ashram, Rishikesh",
+        sources: [
+          { label: "Chaurasi Kutia on Wikipedia", url: "https://en.wikipedia.org/wiki/Chaurasi_Kutia" },
+        ],
       },
       {
         heading: "Explore local markets and cafés",
@@ -302,6 +311,9 @@ export const guideArticles: GuideArticle[] = [
         // geo-verified in-park photo.
         image: "/images/attractions/rajaji-national-park.jpg",
         imageAlt: "An Asian elephant in forest habitat near Rajaji National Park",
+        sources: [
+          { label: "Rajaji National Park on Wikipedia", url: "https://en.wikipedia.org/wiki/Rajaji_National_Park" },
+        ],
       },
     ],
     updated: "2026-01-01",
@@ -363,6 +375,10 @@ export const guideArticles: GuideArticle[] = [
         heading: "What Rishikesh is known for",
         paragraphs: [
           "The Ganga runs through the middle of town, and much of daily life — the aartis, the ghats, the ashrams — is built around it. Rishikesh is also one of India's best-known yoga destinations, and a starting point for the Char Dham pilgrimage route and various Himalayan treks.",
+          `As Wikipedia notes, the city "has hosted the International Yoga Festival annually on the first week of March since 1999, giving it the nickname of Yoga Capital of the World."`,
+        ],
+        sources: [
+          { label: "Rishikesh on Wikipedia", url: "https://en.wikipedia.org/wiki/Rishikesh" },
         ],
       },
       {

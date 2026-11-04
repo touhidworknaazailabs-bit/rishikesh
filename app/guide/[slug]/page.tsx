@@ -6,8 +6,30 @@ import Reveal from "@/components/Reveal";
 import PropertyImage from "@/components/PropertyImage";
 import PhotoCredit from "@/components/PhotoCredit";
 import { BookStayButton, WhatsAppButton } from "@/components/CtaButtons";
-import { guideArticles, getGuideArticleBySlug } from "@/data/guide";
+import { ArticleStructuredData } from "@/components/StructuredData";
+import { guideArticles, getGuideArticleBySlug, type SourceLink } from "@/data/guide";
 import { rooms } from "@/data/rooms";
+import { hotel } from "@/data/hotel";
+
+function formatUpdated(iso: string) {
+  return new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+}
+
+function SourceLinks({ sources }: { sources: SourceLink[] }) {
+  return (
+    <p className="mt-3 text-xs text-charcoal/45">
+      Source:{" "}
+      {sources.map((s, i) => (
+        <span key={s.url}>
+          {i > 0 && ", "}
+          <a href={s.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-charcoal/70">
+            {s.label}
+          </a>
+        </span>
+      ))}
+    </p>
+  );
+}
 
 export function generateStaticParams() {
   return guideArticles.map((a) => ({ slug: a.slug }));
@@ -42,12 +64,21 @@ export default async function GuideArticlePage({
   return (
     <article className="pt-28 md:pt-36 pb-24 md:pb-32">
       <div className="container-editorial max-w-3xl">
+        <ArticleStructuredData
+          title={article.seoTitle}
+          description={article.description}
+          slug={article.slug}
+          updated={article.updated}
+        />
         <Breadcrumbs items={[{ name: "Rishikesh Guide", url: "/guide" }, { name: article.title, url: `/guide/${article.slug}` }]} />
 
         <Reveal className="mt-6 mb-4">
           <p className="eyebrow">RISHIKESH GUIDE</p>
           <h1 className="font-display text-4xl md:text-5xl text-charcoal text-balance">{article.title}</h1>
           <p className="mt-5 text-charcoal/70 leading-relaxed text-lg font-display italic">{article.intro}</p>
+          <p className="mt-4 text-sm text-charcoal/50">
+            By the {hotel.name} team · Last updated {formatUpdated(article.updated)}
+          </p>
         </Reveal>
 
         {article.heroImage && (
@@ -99,6 +130,7 @@ export default async function GuideArticlePage({
                         ))}
                       </ul>
                     )}
+                    {section.sources && <SourceLinks sources={section.sources} />}
                   </div>
                 </div>
               ) : (
@@ -116,6 +148,7 @@ export default async function GuideArticlePage({
                       ))}
                     </ul>
                   )}
+                  {section.sources && <SourceLinks sources={section.sources} />}
                 </>
               )}
             </section>

@@ -8,7 +8,7 @@ import CookieConsent from "@/components/CookieConsent";
 import EnquiryPopup from "@/components/EnquiryPopup";
 import MotionProvider from "@/components/MotionProvider";
 import PageTransition from "@/components/PageTransition";
-import { HotelStructuredData } from "@/components/StructuredData";
+import { HotelStructuredData, WebSiteStructuredData } from "@/components/StructuredData";
 import { hotel } from "@/data/hotel";
 import { siteUrl, siteName } from "@/data/site";
 
@@ -80,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased">
         <MotionProvider>
           <HotelStructuredData />
+          <WebSiteStructuredData />
           <Header />
           <main>
             <PageTransition>{children}</PageTransition>

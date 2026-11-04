@@ -125,7 +125,7 @@ export default function RoomShowcase({ rooms }: { rooms: Room[] }) {
               <p className="text-xs tracking-[0.25em] text-ivory/80 mb-2">
                 {room.type === "AC" ? "AIR CONDITIONED" : "NON AIR CONDITIONED"} · {room.count} ROOMS
               </p>
-              <h3 className="font-display text-3xl md:text-4xl text-ivory">{room.name}</h3>
+              <h3 className="font-display text-3xl md:text-4xl text-ivory text-balance">{room.name}</h3>
               <p className="mt-3 max-w-md text-sm text-ivory/75 leading-relaxed">{room.summary}</p>
 
               <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">

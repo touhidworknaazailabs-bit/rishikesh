@@ -83,16 +83,16 @@ export default function Gallery({ images }: { images: GalleryImage[] }) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[minmax(0,1fr)]">
-        {filtered.map((img, i) => (
+        {filtered.map((img, i) => {
+          const span = tileSpan(img, standardIndexByPosition[i]);
+
+          return (
             <motion.button
               key={img.src + i}
               onClick={() => setActiveIndex(i)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className={clsx(
-                "relative block w-full overflow-hidden rounded-xl group",
-                tileSpan(img, standardIndexByPosition[i])
-              )}
+              className={clsx("relative block w-full overflow-hidden rounded-xl group", span)}
             >
               <PropertyImage
                 src={img.src}
@@ -103,7 +103,8 @@ export default function Gallery({ images }: { images: GalleryImage[] }) {
               />
               <span className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/10 transition-colors duration-300" />
             </motion.button>
-        ))}
+          );
+        })}
       </div>
 
       <AnimatePresence>

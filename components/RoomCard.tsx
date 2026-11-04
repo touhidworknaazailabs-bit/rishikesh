@@ -25,7 +25,7 @@ export default function RoomCard({ room, reverse = false }: { room: Room; revers
 
       <div>
         <p className="eyebrow mb-3">{room.type === "AC" ? "AIR CONDITIONED" : "NON AIR CONDITIONED"}</p>
-        <h3 className="font-display text-3xl md:text-4xl text-charcoal">{room.name}</h3>
+        <h3 className="font-display text-3xl md:text-4xl text-charcoal text-balance">{room.name}</h3>
         <p className="mt-4 text-charcoal/70 leading-relaxed max-w-md">{room.summary}</p>
 
         <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">

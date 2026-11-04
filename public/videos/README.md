@@ -1,33 +1,33 @@
 # Hero background video — sourcing
 
-`hero-rishikesh.mp4` is a ~32-second, muted, looping 1080p background
-video for the homepage hero, built from two real, high-quality,
-**moving** (not locked-off) clips of Rishikesh — both Pexels, free
-license, no attribution required:
+`hero-rishikesh.mp4` is a ~31-second, muted, looping 1080p background
+video for the homepage hero, built from three real, high-quality drone
+and ground clips of Rishikesh — all Pexels, free license, no
+attribution required:
 
 | Segment | Source |
 |---|---|
-| 0–18s: Drone ascending/pulling back over a suspension bridge crossing the Ganga, revealing more of the riverside town and mountains as it climbs — bridge stays prominent in frame throughout, camera movement is continuous and dramatic | Pexels, creator Nitin Khajotia — [source](https://www.pexels.com/video/aerial-view-of-a-city-with-a-bridge-over-a-river-16195456/) (4K vertical original, cropped to a landscape window that tracks the bridge through the ascent) |
-| 18–32s: Golden-hour drone flythrough continuing past the Ganga, Trayambakeshwar Temple and the bridge | Pexels, creator Nitin Khajotia — [source](https://www.pexels.com/video/a-river-with-rocks-and-buildings-in-the-background-19096741/) (4K original, this is a ~15s excerpt from a longer clip) |
+| 0–10s: Close drone shot of turquoise river rapids with a rafting boat, mountains behind | Pexels, creator Ex Route Adventures — [source](https://www.pexels.com/video/a-river-with-rapids-and-mountains-in-the-background-19096561/) |
+| 10–20s: Ground-level shot of the suspension bridge, Trayambakeshwar Temple and the Ganga's turquoise water, close and legible | Pexels, creator shalender kumar — [source](https://www.pexels.com/video/river-under-a-suspension-bridge-6595641/) |
+| 20–31s: Wide sweeping drone aerial orbiting the temple-lined riverbank as the Ganga bends through town | Pexels, creator Nitin Khajotia — [source](https://www.pexels.com/video/a-river-with-rocks-and-buildings-in-the-background-19096741/) (this is an ~11s excerpt from a longer clip, taken from its clean tail section — the clip's earlier minutes show a different, siltier stretch of river and aren't used here) |
 
-Re-encoded with ffmpeg (h264, crf 26, ~15.7MB, 1920×1080).
-`hero-rishikesh-poster.jpg` is the first frame, used as the
-`<video poster>` and as the static fallback shown instead of the video
-when the visitor has `prefers-reduced-motion` set (see
+Re-encoded and concatenated with ffmpeg (h264, crf 26, ~16MB, 1920×1080,
+25fps, audio stripped).
+
+`hero-rishikesh-poster.jpg` is a frame from the first segment (the
+rapids), used as
+the `<video poster>` and as the static fallback shown instead of the
+video when the visitor has `prefers-reduced-motion` set (see
 `components/Hero.tsx`).
 
-### Why this specific pairing
+## Why these three
 
-Earlier versions had a first segment that was either fully static
-(locked-off dusk shot) or only subtly panning — not a convincing
-"moving shot" of the bridge. This version's first segment is a
-vertical drone clip that was originally shot ascending/pulling back
-over the bridge; cropped to a landscape window that follows the same
-flight path, it keeps the bridge prominent in frame from the first
-frame to the last while the camera movement stays unambiguous —
-confirmed by comparing frames across the full clip, which show the
-view progressively widening to reveal more of the city and mountains
-as the bridge itself stays put in the lower third of the frame.
+Earlier versions leaned on distant/hazy drone footage (fully aerial,
+overcast, muddy-looking riverbanks) that read as murky rather than
+inviting. This edit deliberately mixes a close ground-level shot with
+two drone shots chosen specifically for clean daylight, vivid turquoise
+water and legible landmarks (bridge, temple, rapids) — no hazy or
+silt-heavy footage.
 
 ## Missing: Bajrang Setu (the glass-floor bridge)
 
@@ -36,4 +36,4 @@ Pexels/Unsplash/Pixabay. It's too new (opened publicly in late 2025)
 for stock footage libraries to have caught up; searches only return
 news-article pages and YouTube videos, none of which are licensed for
 reuse here. If the hotel has (or can get) real video of Bajrang Setu,
-drop it in here and it can be added as a third segment.
+drop it in here and it can be added as a fourth segment.

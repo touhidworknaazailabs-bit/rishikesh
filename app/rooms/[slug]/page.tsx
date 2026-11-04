@@ -58,7 +58,7 @@ export default async function RoomDetailPage({
           <p className="eyebrow">
             {room.type === "AC" ? "AIR CONDITIONED" : "NON AIR CONDITIONED"} · {room.count} ROOMS AVAILABLE
           </p>
-          <h1 className="font-display text-4xl md:text-5xl text-charcoal">{room.heading}</h1>
+          <h1 className="font-display text-4xl md:text-5xl text-charcoal text-balance">{room.heading}</h1>
           {room.description.map((para) => (
             <p key={para} className="mt-5 text-charcoal/70 leading-relaxed max-w-xl">
               {para}

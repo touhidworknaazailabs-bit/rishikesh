@@ -105,7 +105,7 @@ export default function Footer() {
             <Link href="/privacy-policy" className="hover:text-terracotta transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/terms-and-conditions" className="hover:text-terracotta transition-colors">
+            <Link href="/terms" className="hover:text-terracotta transition-colors">
               Terms &amp; Conditions
             </Link>
           </nav>

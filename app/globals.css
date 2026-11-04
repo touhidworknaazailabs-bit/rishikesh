@@ -110,16 +110,25 @@ h4,
   color: var(--color-ivory);
 }
 
-.container-editorial {
-  width: 100%;
-  max-width: 1360px;
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-@media (min-width: 768px) {
+/* @layer components (rather than plain unlayered CSS) so that a Tailwind
+   utility combined on the same element — e.g. `container-editorial
+   max-w-3xl` for a narrower reading column — can actually override
+   max-width here. Unlayered CSS always beats @layer utilities regardless
+   of source order, so without this, that combination silently did
+   nothing and every "narrow column" page (Privacy Policy, Terms, FAQ,
+   Book, guide articles) rendered at the full 1360px width instead. */
+@layer components {
   .container-editorial {
-    padding-inline: 2.5rem;
+    width: 100%;
+    max-width: 1360px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-editorial {
+      padding-inline: 2.5rem;
+    }
   }
 }
 
